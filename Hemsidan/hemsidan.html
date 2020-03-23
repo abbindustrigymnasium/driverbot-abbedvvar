@@ -1,71 +1,84 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.slidecontainer {
-  width: 90%;
-  margin-top: 15px;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .slidecontainer {
+      width: 90%;
+      margin-top: 15px;
+    }
 
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 25px;
-  background: #3af700;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 25px;
+      background: #3af700;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
 
-.slider:hover {
-  opacity: 7;
-}
+    .slider:hover {
+      opacity: 7;
+    }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 50px;
-  background: rgb(25, 0, 255);
-  cursor: pointer;
-}
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 50px;
+      background: rgb(25, 0, 255);
+      cursor: pointer;
+    }
 
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: rgb(255, 0, 0);
-  cursor: pointer;
-}
-</style>
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: rgb(255, 0, 0);
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
 
-<h1>Robotsidan</h1>
-<h3>Dra i spaken för hastighet</h3>
+  <h1>Robotsidan</h1>
+  <h3>Dra i spaken för hastighet</h3>
 
-<div class="slidecontainer">
-  <input type="range" min="-1024" max="1024" value="0" class="slider" id="myRange">
-</div>
-<p>Bakåt.......................................................................................................................................................................................................................................................................Framåt</p>
+  <div class="slidecontainer" oninput="funcspeed()">
+    <input type="range" min="-1024" max="1024" value="0" class="slider" id="myRange">
+  </div>
+  <p>
+    Bakåt.......................................................................................................................................................................................................................................................................Framåt
+  </p>
 
-<h3>Dra i slidern för att svänga</h3>
+  <h3>Dra i slidern för att svänga</h3>
 
-<div class="slidecontainer">
-  <input type="range" min="0" max="180" class="slider" id="myRange">
-</div>
-<p>Vänster.......................................................................................................................................................................................................................................................................Höger</p>
-<script>
-var slider = document.getElementById("myRange");
-var output = document.getElementById("speed");
-output = slider.value;
+  <div class="slidecontainer" oninput="funcstyr()">
+    <input type="range" min="0" max="180" class="slider" id="myRange2">
+  </div>
+  <p>
+    Vänster.......................................................................................................................................................................................................................................................................Höger
+  </p>
+  <p id="demo"></p>
+  <script>
+    var slider = document.getElementById("myRange").value;
+    var output = document.getElementById("speed");
 
-slider.oninput = function() {
-  output = this.value;
-}
-console.log(this.value)
-</script>
+    function funcspeed() {
+      var speed = document.getElementById("myRange").value;
+      document.getElementById("demo").innerHTML = speed;
+      console.log(speed)
+    }
+    function funcstyr() {
+      var styr = document.getElementById("myRange2").value;
+      document.getElementById("demo").innerHTML = styr;
+      console.log(styr)
+    }
+  </script>
 
 </body>
+
 </html>

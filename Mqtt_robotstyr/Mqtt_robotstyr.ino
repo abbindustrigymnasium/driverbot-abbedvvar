@@ -8,7 +8,7 @@ Servo servo;
 void onConnectionEstablished();
 
 EspMQTTClient client(
- "DOVADO-109bc",           
+  "DOVADO-109bc",           
   "pggphpij",           
   "maqiatto.com",  // MQTT broker ip
   1883,             // MQTT broker port
@@ -26,23 +26,26 @@ void setup() {
   pinMode(motordir, OUTPUT);
   Serial.begin(115200);
 }
-void Riktning(int val){
-  analogWrite(motordir, val);
-}
-void Hastighet(int val){
-  analogWrite(motorspeed, val);
-}
-void Angle(int val){
-  servo.write(val);
-}
+
 void onConnectionEstablished()
 {
   client.subscribe("edvin.vare@abbindustrigymnasium.se/ttmotor", [] (const String &payload){
-   Serial.println(payload);
-   int Direc= payload.substring(1, payload.indexOf(',')).toInt();
-   int Speed= payload.substring(payload.lastIndexOf(',') + 1).toInt();
-   analogWrite(motorspeed, Speed);
-   digitalWrite(motordir, Direc);
+   int Speed= payload.toInt();
+   if(Speed<0){
+    int Backa = Speed-Speed-Speed;
+    analogWrite(motorspeed, Backa);
+    digitalWrite(motordir, 0);
+    Serial.println(Backa);
+   }    
+   else if(Speed>0){
+    analogWrite(motorspeed, Speed);
+    digitalWrite(motordir, 1);        
+   }
+   else{
+    analogWrite(motorspeed, 0);
+   }
+
+   Serial.println(Speed);
    });
   client.subscribe("edvin.vare@abbindustrigymnasium.se/servo", [] (const String &payload){
    Serial.println(payload);
