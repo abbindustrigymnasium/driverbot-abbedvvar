@@ -8,8 +8,8 @@ Servo servo;
 void onConnectionEstablished();
 
 EspMQTTClient client(
-  "DOVADO-109bc",           
-  "pggphpij",           
+  "DOVADO-109bc",
+  "pggphpij",
   "maqiatto.com",  // MQTT broker ip
   1883,             // MQTT broker port
   "edvin.vare@abbindustrigymnasium.se", // MQTT username
@@ -36,10 +36,10 @@ void onConnectionEstablished()
     analogWrite(motorspeed, Backa);
     digitalWrite(motordir, 0);
     Serial.println(Backa);
-   }    
+   }
    else if(Speed>0){
     analogWrite(motorspeed, Speed);
-    digitalWrite(motordir, 1);        
+    digitalWrite(motordir, 1);
    }
    else{
     analogWrite(motorspeed, 0);
