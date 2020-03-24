@@ -10,3 +10,7 @@ Jag kommer att fortsätta utveckla pythonprogramet ytterligare under lektionerna
 #### 23/3
 Idag behövde jag åka till sjukhuset för att magnetröntga min hand då jag hade gjort illa den när vi var i romme med skol if. 
 Jag har tittat på alla filmer som ligger bifogade i teamet.
+
+#### 24/3 
+Idag har jag försökt hela dagen att kunna publicera meddelanden från min hemsida till mina topics i mqtt, det har inte funkat bra utan jag får bara errormedelanden så kommer behöva hjälp med att fixa en bra publish metod som faktiskt fungerar. 
+Har lagt in en ny funktion i val simulatorn som räknar ut antalet personer som inte röstade och antalet som får rösta kan man själv avgöra genom en input.
