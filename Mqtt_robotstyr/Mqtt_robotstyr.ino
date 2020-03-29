@@ -8,8 +8,8 @@ Servo servo;
 void onConnectionEstablished();
 
 EspMQTTClient client(
-  "DOVADO-109bc",
-  "pggphpij",
+  "Vares WiFi",
+  "Varesfiber19",
   "maqiatto.com",  // MQTT broker ip
   1883,             // MQTT broker port
   "edvin.vare@abbindustrigymnasium.se", // MQTT username
