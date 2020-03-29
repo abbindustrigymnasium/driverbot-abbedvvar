@@ -5,11 +5,46 @@
   <link rel="icon" type="image/png" href="23favi.png" sizes="32x32" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    .background {
-      background-image: url("shark.png");
-      background-repeat: no-repeat;
-      background-position: center bottom;
+    .button {
+      background-color: #4CAF50;
+      /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-right: 0px;
     }
+
+    .font {
+      font-family: "Arial Black", Gadget, sans-serif;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .background {
+      background-color: rgb(0, 174, 255);
+      background-image: url(oceanbackground.jpg);
+      background-position: center;
+      background-size: cover;
+    }
+
+    .picturecontainer {
+      object-position: center;
+      height: 300px;
+      margin-left: 350px;
+      margin-right: 200px;
+    }
+
+    .picture {
+      height: 100%;
+
+    }
+
     .slidecontainer {
       width: 100%;
       margin-top: 15px;
@@ -22,7 +57,7 @@
       height: 25px;
       background: #3af700;
       outline: none;
-      opacity: 0.5;
+      opacity: 0.9;
       -webkit-transition: .2s;
       transition: opacity .2s;
       border-radius: 100px;
@@ -38,8 +73,8 @@
       appearance: none;
       width: 25px;
       height: 50px;
-      background: rgb(25, 0, 255);
-      cursor: default;
+      background: rgb(255, 0, 0);
+      cursor: w-resize;
       border-radius: 10px;
     }
 
@@ -49,10 +84,13 @@
       background: rgb(255, 0, 0);
       cursor: pointer;
     }
-
   </style>
-  <title>Hajen 23 Kontroller</title>
+  <title>Haj 23</title>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+  <script src="https://kit.fontawesome.com/28d11e745b.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <script>
     window.onload = function exampleFunction() {
@@ -85,18 +123,11 @@
     }
     let topic = "edvin.vare@abbindustrigymnasium.se/ttmotor";
     let topic2 = "edvin.vare@abbindustrigymnasium.se/servo"
-    // Called when the client connects
-    function onConnect() {
-      // Fetch the MQTT topic from the form
-      console.log(topic, topic2);
-      // Print output for the user in the messages div
-      // document.getElementById("messages").innerHTML += '<span>Subscribing to: ' + topic + '</span><br/>';
 
-      // Subscribe to the requested topic
+    function onConnect() {
+      console.log(topic, topic2);
       client.subscribe(topic);
-      message = new Paho.MQTT.Message("Hello World!");
-      message.destinationName = topic;
-      client.send(message);
+      client.subscribe(topic2);
     }
 
     function onSendspeed() {
@@ -114,13 +145,12 @@
       message.destinationName = topic2;
       client.send(message);
     }
-    // Called when the client loses its connection
+
     function onConnectionLost(responseObject) {
       console.log("Connection lost!");
       startConnect();
     }
 
-    // Called when a message arrives
     function onMessageArrived(message) {
       console.log("Sent: " + message.payloadString);
     }
@@ -128,39 +158,55 @@
 </head>
 
 <body class="background">
+  <div>
+    <h1 class="font">Hajen 23 kontrollen<button class="button" onclick="funcreset()">Reset</button>
+    </h1>
+  </div>
 
-  <h1>Robotsidan</h1>
-  <h3>Dra i spaken för hastighet</h3>
+  <div class="center">
+    <h3 class="font">
+      <i class="fas fa-arrow-left"></i>
+      <i class="fas fa-fish"></i>
+      Dra i spaken för hastighet
+      <i class="fas fa-fish"></i>
+      <i class="fas fa-arrow-right"></i>
+    </h3>
+  </div>
 
   <div class="slidecontainer" oninput="funcspeed()">
     <input type="range" min="-1024" max="1024" value="0" class="slider" id="Speed">
   </div>
-  <!-- <p>
-    Bakåt.......................................................................................................................................................................................................................................................................Framåt
-  </p> -->
 
-  <h3>Dra i slidern för att svänga</h3>
+  <div class="center">
+    <h3 class="font">
+      <i class="fas fa-reply"></i>
+      Dra i slidern för att svänga
+      <i class="fas fa-share"></i>
+    </h3>
+  </div>
 
   <div class="slidecontainer" oninput="funcstyr()">
     <input type="range" min="0" max="180" class="slider" ::-moz-range-thumb :hover id="Servo">
   </div>
-  <!-- <p>
-    Vänster.......................................................................................................................................................................................................................................................................Höger
-  </p> -->
-  <p id="demo"></p>
-  <script>
-    // var slider = document.getElementById("Speed").value;
-    // var output = document.getElementById("speed");
+  <div class="picturecontainer">
+    <img class="picture" src="shark.png">
+  </div>
 
+  <script>
     function funcspeed() {
       var speed = document.getElementById("Speed").value;
-      document.getElementById("demo").innerHTML = speed;
       onSendspeed();
     }
 
     function funcstyr() {
       var styr = document.getElementById("Servo").value;
-      document.getElementById("demo").innerHTML = styr;
+      onSendstyr();
+    }
+
+    function funcreset() {
+      document.getElementById("Servo").value = 90;
+      document.getElementById("Speed").value = 0;
+      onSendspeed();
       onSendstyr();
     }
   </script>
