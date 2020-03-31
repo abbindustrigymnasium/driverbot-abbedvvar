@@ -32,13 +32,15 @@ void onConnectionEstablished()
   client.subscribe("edvin.vare@abbindustrigymnasium.se/ttmotor", [] (const String &payload){
    int Speed= payload.toInt();
    if(Speed<0){
-    int Backa = Speed-Speed-Speed;
+    int BRot = Speed-Speed-Speed;
+    int Backa = sqrt(BRot);
     analogWrite(motorspeed, Backa);
     digitalWrite(motordir, 0);
     Serial.println(Backa);
    }
    else if(Speed>0){
-    analogWrite(motorspeed, Speed);
+    int FRot = sqrt(Speed);
+    analogWrite(motorspeed, FRot);
     digitalWrite(motordir, 1);
    }
    else{
