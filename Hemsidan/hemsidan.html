@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
+  <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="23favi.png" sizes="32x32" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -24,31 +24,39 @@
 
     .center {
       text-align: center;
+      width: auto;
     }
 
     .background {
-      background-color: rgb(0, 174, 255);
+      background-color: rgb(99, 228, 221);
       background-image: url(oceanbackground.jpg);
       background-position: center;
       background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
     }
 
     .picturecontainer {
-      object-position: center;
-      height: 300px;
-      margin-left: 350px;
-      margin-right: 200px;
+      height: 95%;
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .picture {
-      height: 100%;
-
+      display: block;
+      height: auto;
+      width: 35%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 10px;
     }
 
     .slidecontainer {
-      width: 100%;
+      width: 80%;
       margin-top: 15px;
-      object-position: center;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .slider {
@@ -131,7 +139,7 @@
     }
 
     function onSendspeed() {
-      let message = document.getElementById("Speed").value;
+      let message = speed.toString();//document.getElementById("speed").value;
       console.log(message);
       message = new Paho.MQTT.Message(message);
       message.destinationName = topic;
@@ -157,7 +165,7 @@
   </script>
 </head>
 
-<body class="background">
+<body scroll="no" style="overflow: hidden" class="background">
   <div>
     <h1 class="font">Hajen 23 kontrollen<button class="button" onclick="funcreset()">Reset</button>
     </h1>
@@ -174,7 +182,7 @@
   </div>
 
   <div class="slidecontainer" oninput="funcspeed()">
-    <input type="range" min="-1024" max="1024" value="0" class="slider" id="Speed">
+    <input type="range" min="-1048576" max="1048576" value="0" class="slider" id="Speed">
   </div>
 
   <div class="center">
@@ -188,13 +196,14 @@
   <div class="slidecontainer" oninput="funcstyr()">
     <input type="range" min="0" max="180" class="slider" ::-moz-range-thumb :hover id="Servo">
   </div>
-  <div class="picturecontainer">
-    <img class="picture" src="shark.png">
-  </div>
+  <img class="picture" src="shark.png">
 
   <script>
+    var speed=0;
     function funcspeed() {
-      var speed = document.getElementById("Speed").value;
+      var sped= document.getElementById("Speed").value;
+      speed = sped;
+      console.log(speed);
       onSendspeed();
     }
 
@@ -206,6 +215,7 @@
     function funcreset() {
       document.getElementById("Servo").value = 90;
       document.getElementById("Speed").value = 0;
+      speed=0;
       onSendspeed();
       onSendstyr();
     }
