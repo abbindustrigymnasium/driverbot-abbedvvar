@@ -17,3 +17,6 @@ Har lagt in en ny funktion i val simulatorn som räknar ut antalet personer som 
 
 #### 27/3
 Idag har jag fixat iordning så att jag kan via mqtt styra min robot via min egen hesida. Även börjat lägga in lite css-element så att min sida blir lite snyggare .
+
+#### 31/4
+Idag har jag byggt om hela min robot så att den nu är klar och så bra utifrån hur jag ville få den. Jag har även gjort slidern för speed bättre genom att känsligheten ökar desdo längre ut man drar den så att de värden då motorn snurrar nu är lättare att vara exakt på. Min hemsida ipplagd i en S3 bucket så att den finns tillgänglig och öppna i telefon och andra enheter. Det jag såg då var att jag behöver anpassa hemsidan efter just telefonen, så det har jag också gjort idag. Det gör jag genom att göra de olika objekten på hemsidan mer dynamiska.
