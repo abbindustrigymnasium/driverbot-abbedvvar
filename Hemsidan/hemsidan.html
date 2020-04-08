@@ -93,7 +93,7 @@
       cursor: pointer;
     }
   </style>
-  <title>Haj 23</title>
+  <title>Stream Shark</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
   <script src="https://kit.fontawesome.com/28d11e745b.js" crossorigin="anonymous"></script>
@@ -139,7 +139,7 @@
     }
 
     function onSendspeed() {
-      let message = speed.toString();//document.getElementById("speed").value;
+      let message = speed.toString();
       console.log(message);
       message = new Paho.MQTT.Message(message);
       message.destinationName = topic;
@@ -167,7 +167,7 @@
 
 <body scroll="no" style="overflow: hidden" class="background">
   <div>
-    <h1 class="font">Hajen 23 kontrollen<button class="button" onclick="funcreset()">Reset</button>
+    <h1 class="font">Stream Shark<button class="button" onclick="funcreset()">Reset</button>
     </h1>
   </div>
 
