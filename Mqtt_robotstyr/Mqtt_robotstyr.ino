@@ -5,11 +5,12 @@ Servo servo;
 #define motorspeed 5
 #define motordir 0
 
+String musicplay= "";
 void onConnectionEstablished();
 
 EspMQTTClient client(
-  "Vares WiFi",
-  "Varesfiber19",
+  "DOVADO-109bc",
+  "pggphpij",
   "maqiatto.com",  // MQTT broker ip
   1883,             // MQTT broker port
   "edvin.vare@abbindustrigymnasium.se", // MQTT username
@@ -24,7 +25,8 @@ void setup() {
   servo.attach(14);
   pinMode(motorspeed, OUTPUT);
   pinMode(motordir, OUTPUT);
-  Serial.begin(115200);
+  pinMode(12, OUTPUT);
+  Serial.begin(115200);  
 }
 
 void onConnectionEstablished()
@@ -54,7 +56,13 @@ void onConnectionEstablished()
    int Angle = payload.toInt();
    servo.write(Angle);
    });
+  client.subscribe("edvin.vare@abbindustrigymnasium.se/music", [] (const String &payload){
+   Serial.println(payload);
+   String musicplay = payload;
+   extern void sing();
+  });
 }
 void loop() {
+
 client.loop();
 }

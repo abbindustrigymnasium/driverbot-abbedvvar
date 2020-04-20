@@ -1,4 +1,4 @@
-/*#define NOTE_B0  31
+#define NOTE_B0  31
 #define NOTE_C1  33
 #define NOTE_CS1 35
 #define NOTE_D1  37
@@ -88,7 +88,9 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-#define melodyPin 3
+#define melodyPin 12 //D6
+
+void sing();
 
 int melody[] = {
   NOTE_C1,
@@ -114,24 +116,17 @@ int tempo[] = {
   8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,16,16,8,16,16,16,16,16,16,4,8,16,16,16,4,16,8,1,1
 };
 
-void setup(void)
-{
-  pinMode(3, OUTPUT);//buzzer
-  pinMode(13, OUTPUT);//led indicator when singing a note
-
-}
-void loop()
-{
-  //sing the tunes
-  sing(1);
-}
 int song = 0;
 
 void sing(int s) {
   // iterate over the notes of the melody:
   song = s;
+  extern String musicplay;
+  if(musicplay== "Jaws"){
+    Serial.println("playing jaws theme");
     int size = sizeof(melody) / sizeof(int);
     for (int thisNote = 0; thisNote < size; thisNote++) {
+      Serial.println("Spelar");
 
       // to calculate the note duration, take one second
       // divided by the note type.
@@ -147,12 +142,11 @@ void sing(int s) {
 
       // stop the tone playing:
       buzz(melodyPin, 0, noteDuration);
-
     }
+   }
   }
 
 void buzz(int targetPin, long frequency, long length) {
-  digitalWrite(13, HIGH);
   long delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
   //// 1 second's worth of microseconds, divided by the frequency, then split in half since
   //// there are two phases to each cycle
@@ -165,6 +159,5 @@ void buzz(int targetPin, long frequency, long length) {
     digitalWrite(targetPin, LOW); // write the buzzer pin low to pull back the diaphram
     delayMicroseconds(delayValue); // wait again or the calculated delay value
   }
-  digitalWrite(13, LOW);
 
-}*/
+}
