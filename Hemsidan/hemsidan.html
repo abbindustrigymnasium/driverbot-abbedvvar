@@ -7,7 +7,6 @@
   <style>
     .button {
       background-color: #4CAF50;
-      /* Green */
       border: none;
       color: white;
       padding: 15px 32px;
@@ -46,7 +45,7 @@
     .picture {
       display: block;
       height: auto;
-      width: 35%;
+      width: 40%;
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 10px;
@@ -130,12 +129,14 @@
       startConnect()
     }
     let topic = "edvin.vare@abbindustrigymnasium.se/ttmotor";
-    let topic2 = "edvin.vare@abbindustrigymnasium.se/servo"
+    let topic2 = "edvin.vare@abbindustrigymnasium.se/servo";
+    let topic3 = "edvin.vare@abbindustrigymnasium.se/music"
 
     function onConnect() {
-      console.log(topic, topic2);
+      console.log(topic, topic2, topic3);
       client.subscribe(topic);
       client.subscribe(topic2);
+      client.subscribe(topic3);
     }
 
     function onSendspeed() {
@@ -154,6 +155,13 @@
       client.send(message);
     }
 
+    function onSendmusik() {
+      let message = Musik.toString();
+      message = new Paho.MQTT.Message(message);
+      message.destinationName = topic3;
+      client.send(message);
+    }
+
     function onConnectionLost(responseObject) {
       console.log("Connection lost!");
       startConnect();
@@ -167,7 +175,7 @@
 
 <body scroll="no" style="overflow: hidden" class="background">
   <div>
-    <h1 class="font">Stream Shark<button class="button" onclick="funcreset()">Reset</button>
+    <h1 class="font">Stream Shark<div class="button" onclick="funcreset()">Reset</div>
     </h1>
   </div>
 
@@ -196,10 +204,10 @@
   <div class="slidecontainer" oninput="funcstyr()">
     <input type="range" min="0" max="180" class="slider" ::-moz-range-thumb :hover id="Servo">
   </div>
-  <img class="picture" src="shark.png">
-  <button></button>
+  <img class="picture" src="shark.png" onclick="musik()">
 
   <script>
+    var even=0;
     var speed=0;
     function funcspeed() {
       var sped= document.getElementById("Speed").value;
@@ -219,6 +227,20 @@
       speed=0;
       onSendspeed();
       onSendstyr();
+    }
+    function musik(){
+      if(even % 2==0){
+        var music = 1;
+        Musik= music
+        onSendmusik();
+      }
+      else{
+        var music = 0;
+        Musik= music
+        onSendmusik();
+      }
+      even++;
+      console.log(even)
     }
   </script>
 
