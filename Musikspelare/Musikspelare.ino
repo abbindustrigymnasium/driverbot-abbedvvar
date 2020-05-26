@@ -88,63 +88,68 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-#define melodyPin 12 //D6
-
-void sing();
+#define Speaker 13
 
 int melody[] = {
   NOTE_C1,
-  NOTE_C1,NOTE_D1,0,0,
-  NOTE_C1,NOTE_D1,NOTE_C1,0,
+  NOTE_C1, NOTE_D1, 0, 0,
+  NOTE_C1, NOTE_D1, NOTE_C1, 0,
   0,
-  NOTE_C1,NOTE_D1,0,NOTE_C1,NOTE_D1,0,
-  NOTE_C1,NOTE_D1,0,NOTE_C1,NOTE_D1,0,
-  NOTE_C1,NOTE_D1,NOTE_C1,NOTE_D1,NOTE_C1,NOTE_D1,NOTE_C1,NOTE_D1,
-  NOTE_C1,NOTE_D1,NOTE_B0,NOTE_C1,NOTE_C1,NOTE_D1,NOTE_B0,NOTE_C1,
-  NOTE_C1,NOTE_D1,NOTE_C1,NOTE_D1,NOTE_C1,NOTE_D1,NOTE_C1,NOTE_D1, 
-  NOTE_C1,NOTE_D1,NOTE_B0,NOTE_C1,NOTE_C1,NOTE_D1,NOTE_B0,NOTE_C1,
-  NOTE_C4,NOTE_E4,NOTE_AS4,NOTE_D1,NOTE_C1,NOTE_D1,
-  NOTE_C1,NOTE_C2,NOTE_C1,NOTE_D1,NOTE_C1,NOTE_D1,NOTE_C2,NOTE_D1,
-  NOTE_C1,NOTE_D1,NOTE_B0,NOTE_C1,NOTE_C1,NOTE_D1,NOTE_B0,NOTE_C1,
-  NOTE_C1,NOTE_D1,NOTE_C4,NOTE_E4,NOTE_AS5,NOTE_D4,NOTE_F4,NOTE_B5,NOTE_C1,NOTE_C4,NOTE_E4,
-  NOTE_AS5,NOTE_AS5,NOTE_B5,NOTE_G4,NOTE_C4,NOTE_B4,NOTE_B4,NOTE_D1,0,0
+  NOTE_C1, NOTE_D1, 0, NOTE_C1, NOTE_D1, 0,
+  NOTE_C1, NOTE_D1, 0, NOTE_C1, NOTE_D1, 0,
+  NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1,
+  NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1, NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1,
+  NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1,
+  NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1, NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1,
+  NOTE_C4, NOTE_E4, NOTE_AS4, NOTE_D1, NOTE_C1, NOTE_D1,
+  NOTE_C1, NOTE_C2, NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1, NOTE_C2, NOTE_D1,
+  NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1, NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1,
+  NOTE_C1, NOTE_D1, NOTE_C4, NOTE_E4, NOTE_AS5, NOTE_D4, NOTE_F4, NOTE_B5, NOTE_C1, NOTE_C4, NOTE_E4,
+  NOTE_AS5, NOTE_AS5, NOTE_B5, NOTE_G4, NOTE_C4, NOTE_B4, NOTE_B4, NOTE_D1, 0, 0
 };
 
 int tempo[] = {
-  1,4,8,6,4,4,4,8,8,1,4,8,8,4,8,8,4,8,8,4,8,8,
-  8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,16,16,2,8,8,8,
-  8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,16,16,8,16,16,16,16,16,16,4,8,16,16,16,4,16,8,1,1
+  1, 4, 8, 6, 4, 4, 4, 8, 8, 1, 4, 8, 8, 4, 8, 8, 4, 8, 8, 4, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 2, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 8, 16, 16, 16, 16, 16, 16, 4, 8, 16, 16, 16, 4, 16, 8, 1, 1
 };
 
+void setup(void)
+{
+  pinMode(13, OUTPUT); //Högtalaren
+  pinMode(11, INPUT);
+  Serial.begin(9600);
+
+}
+void loop()
+{
+  int Music = digitalRead(3);
+  if (Music == 1) {
+    sing(1);
+
+
+  }
+}
 int song = 0;
 
 void sing(int s) {
-  // iterate over the notes of the melody:
   song = s;
-  extern String musicplay;
-  if(musicplay== "Jaws"){
-    Serial.println("playing jaws theme");
-    int size = sizeof(melody) / sizeof(int);
-    for (int thisNote = 0; thisNote < size; thisNote++) {
-      Serial.println("Spelar");
-
-      // to calculate the note duration, take one second
-      // divided by the note type.
-      //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-      int noteDuration = 1000 / tempo[thisNote];
-
-      buzz(melodyPin, melody[thisNote], noteDuration);
-
-      // to distinguish the notes, set a minimum time between them.
-      // the note's duration + 30% seems to work well:
-      int pauseBetweenNotes = noteDuration * 1.30;
-      delay(pauseBetweenNotes);
-
-      // stop the tone playing:
-      buzz(melodyPin, 0, noteDuration);
+  int size = sizeof(melody) / sizeof(int);    //Antal noter som ska spelas
+  for (int thisNote = 0; thisNote < size; thisNote++) {
+    if (digitalRead(3) == 0) {
+      break;
     }
-   }
+    else {
+      int Notelength = 1000 / tempo[thisNote];    //Räknar ut längden på varje not i 1 sekund
+      buzz(Speaker, melody[thisNote], Notelength);    //Spelar melodin
+      int Paus = Notelength * 1.30;    //Gör en paus mellan varje not för att framhäva skillnaderna mellan noterna
+      delay(Paus);
+      buzz(Speaker, 0, Notelength);   //Slutar spela melodin
+    }
+
+
   }
+}
 
 void buzz(int targetPin, long frequency, long length) {
   long delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
