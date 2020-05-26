@@ -26,3 +26,6 @@ Under lovet Började jag med mitt lilla musikprjekt genom att skapa olika musiks
 
 #### 20/4
 Idag har jag börjat att integrera ett litet musikprojekt som jag byggt till en arduino uno till NodeMCU:n och det har gått sådär. Grejen är att Noden och Arduino Uno kompillerar koderna olika vilket gör att det blir en krock som gör att den bara spelar upp en enstaka ton istället för hela melodin som är meningen. Då har jag börjat titta på ur man kan göra om det så att det kan fungera bättre så att hela melodin spelas.
+
+#### 21/4
+Idag har jag fortsatt att försöka integrera musikspelaren. Men idag har jag fokuserat på att omstukturera min kod då de loopar jag byggt står och väntar på att saker ska ske men de är för långsamma att räkna ut värden att den blockerar flödet i koden som gör att den behöver starta om varje gång. Det har än så länge gått sådär men jag tror jag har kommit på hur jag ska lösa problemet.
