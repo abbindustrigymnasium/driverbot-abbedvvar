@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="23favi.png" sizes="32x32" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    .banner {
+      position: absolute;
+      background-color: black;
+      top: 0px;
+      right: 0px;
+      left: 0px;
+      bottom: 0px;
+      font-size: 40px;
+      color: white;
+      z-index: 10;
+      text-align: center;
+      display: none;
+    }
+
     .button {
       background-color: #4CAF50;
       border: none;
       color: white;
-      padding: 15px 32px;
+      position: absolute;
+      padding: 0.5% 2%;
       text-align: center;
       text-decoration: none;
-      display: inline-block;
       font-size: 16px;
-      margin-right: 0px;
+      margin-left: 85%;
+      top: 5%;
+      display: none;
+      border-radius: 15px;
+      cursor: pointer;
     }
 
     .font {
@@ -40,6 +59,7 @@
       width: 95%;
       margin-left: auto;
       margin-right: auto;
+      
     }
 
     .picture {
@@ -49,6 +69,7 @@
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .slidecontainer {
@@ -101,6 +122,7 @@
 
   <script>
     window.onload = function exampleFunction() {
+
       startConnect()
     }
 
@@ -174,11 +196,13 @@
 </head>
 
 <body scroll="no" style="overflow: hidden" class="background">
-  <div>
-    <h1 class="font">Stream Shark<div class="button" onclick="funcreset()">Reset</div>
-    </h1>
+  <div id="plsrotate" class="banner">
+    Snälla rotera skärmen för att starta kontrollern
   </div>
-
+  <div>
+    <h1 class="font">Stream Shark</h1>
+  </div>
+  <div class="button" id="resbutton" onclick="funcreset()"><h2 class="font">Reset</h2></div>
   <div class="center">
     <h3 class="font">
       <i class="fas fa-arrow-left"></i>
@@ -207,36 +231,77 @@
   <img class="picture" src="shark.png" onclick="musik()">
 
   <script>
-    var even=0;
-    var speed=0;
+    var even = 0;
+    var speed = 0;
+    var styr = 0;
+
+    window.addEventListener('deviceorientation', function (event) {
+      var show = document.getElementById("plsrotate");
+      var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
+
+      if (orientation === "landscape-primary") {
+        show.style.display = "none";
+        speed=(45-event.gamma)/0.00004291534423828125;
+        onSendspeed();
+        styr=(45+event.beta)/0.5;
+        onSendstyr();
+        showres();
+      } 
+      else if (orientation === "landscape-secondary") {
+        show.style.display = "none";
+        speed=-(45-event.gamma)/0.00004291534423828125;
+        onSendspeed();
+        styr=-(45+event.beta)/0.5;
+        onSendstyr();
+        showres();
+      } 
+      else if (orientation === "portrait-secondary" || orientation === "portrait-primary") {
+        show.style.display = "block";
+      }
+    });
+
     function funcspeed() {
-      var sped= document.getElementById("Speed").value;
-      speed = sped;
+      speed = document.getElementById("Speed").value;
       console.log(speed);
       onSendspeed();
+      showres();
     }
 
     function funcstyr() {
-      var styr = document.getElementById("Servo").value;
+      styr = document.getElementById("Servo").value;
       onSendstyr();
+      showres();
+    }
+
+    function showres() {
+      var show = document.getElementById("resbutton");
+      if (document.getElementById("Speed").value != 0) {
+        show.style.display = "block";
+      } else if (document.getElementById("Servo").value != 0) {
+        show.style.display = "block";
+      } else {
+        show.style.display = "none";
+      }
     }
 
     function funcreset() {
       document.getElementById("Servo").value = 90;
       document.getElementById("Speed").value = 0;
-      speed=0;
+      var show = document.getElementById("resbutton");
+      speed = 0;
       onSendspeed();
       onSendstyr();
+      show.style.display = "none";
     }
-    function musik(){
-      if(even % 2==0){
+
+    function musik() {
+      if (even % 2 == 0) {
         var music = 1;
-        Musik= music
+        Musik = music
         onSendmusik();
-      }
-      else{
+      } else {
         var music = 0;
-        Musik= music
+        Musik = music
         onSendmusik();
       }
       even++;
