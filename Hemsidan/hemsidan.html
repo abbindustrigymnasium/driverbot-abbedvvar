@@ -3,206 +3,41 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="23favi.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="images/23favi.png" sizes="32x32" />
+  <link rel="stylesheet" type="text/css" href="global.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    .banner {
-      position: absolute;
-      background-color: black;
-      top: 0px;
-      right: 0px;
-      left: 0px;
-      bottom: 0px;
-      font-size: 40px;
-      color: white;
-      z-index: 10;
-      text-align: center;
-      display: none;
-    }
-
-    .button {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      position: absolute;
-      padding: 0.5% 2%;
-      text-align: center;
-      text-decoration: none;
-      font-size: 16px;
-      margin-left: 85%;
-      top: 5%;
-      display: none;
-      border-radius: 15px;
-      cursor: pointer;
-    }
-
-    .font {
-      font-family: "Arial Black", Gadget, sans-serif;
-    }
-
-    .center {
-      text-align: center;
-      width: auto;
-    }
-
-    .background {
-      background-color: rgb(99, 228, 221);
-      background-image: url(oceanbackground.jpg);
-      background-position: center;
-      background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-    }
-
-    .picturecontainer {
-      height: 95%;
-      width: 95%;
-      margin-left: auto;
-      margin-right: auto;
-      
-    }
-
-    .picture {
-      display: block;
-      height: auto;
-      width: 40%;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .slidecontainer {
-      width: 80%;
-      margin-top: 15px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .slider {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 25px;
-      background: #3af700;
-      outline: none;
-      opacity: 0.9;
-      -webkit-transition: .2s;
-      transition: opacity .2s;
-      border-radius: 100px;
-      object-position: center;
-    }
-
-    .slider:hover {
-      opacity: 7;
-    }
-
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 50px;
-      background: rgb(255, 0, 0);
-      cursor: w-resize;
-      border-radius: 10px;
-    }
-
-    .slider::-moz-range-thumb {
-      width: 25px;
-      height: 25px;
-      background: rgb(255, 0, 0);
-      cursor: pointer;
-    }
-  </style>
   <title>Stream Shark</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
   <script src="https://kit.fontawesome.com/28d11e745b.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <script>
-    window.onload = function exampleFunction() {
-
-      startConnect()
-    }
-
-    function startConnect() {
-      // Generate a random client ID
-      clientID = "clientID_" + parseInt(Math.random() * 100);
-
-      // Fetch the hostname/IP address and port number from the form
-      host = 'maqiatto.com'
-      port = '8883';
-      client = new Paho.MQTT.Client(host, Number(port), clientID);
-      // Set callback handlers
-      client.onConnectionLost = onConnectionLost;
-      client.onMessageArrived = onMessageArrived;
-
-      client.connect({
-        userName: "edvin.vare@abbindustrigymnasium.se",
-        password: "Edvinsrobot",
-        onSuccess: onConnect,
-        onFailure: onFail,
-      });
-    }
-
-    function onFail() {
-      console.log("Failed to connect!")
-      startConnect()
-    }
-    let topic = "edvin.vare@abbindustrigymnasium.se/ttmotor";
-    let topic2 = "edvin.vare@abbindustrigymnasium.se/servo";
-    let topic3 = "edvin.vare@abbindustrigymnasium.se/music"
-
-    function onConnect() {
-      console.log(topic, topic2, topic3);
-      client.subscribe(topic);
-      client.subscribe(topic2);
-      client.subscribe(topic3);
-    }
-
-    function onSendspeed() {
-      let message = speed.toString();
-      console.log(message);
-      message = new Paho.MQTT.Message(message);
-      message.destinationName = topic;
-      client.send(message);
-    }
-
-    function onSendstyr() {
-      let message = document.getElementById("Servo").value;
-      console.log(message);
-      message = new Paho.MQTT.Message(message);
-      message.destinationName = topic2;
-      client.send(message);
-    }
-
-    function onSendmusik() {
-      let message = Musik.toString();
-      message = new Paho.MQTT.Message(message);
-      message.destinationName = topic3;
-      client.send(message);
-    }
-
-    function onConnectionLost(responseObject) {
-      console.log("Connection lost!");
-      startConnect();
-    }
-
-    function onMessageArrived(message) {
-      console.log("Sent: " + message.payloadString);
-    }
-  </script>
+  <script src="headscript.js"></script>
 </head>
 
 <body scroll="no" style="overflow: hidden" class="background">
+
   <div id="plsrotate" class="banner">
     Snälla rotera skärmen för att starta kontrollern
   </div>
-  <div>
-    <h1 class="font">Stream Shark</h1>
+  <div class="switch" id="gyroswitch" onclick="gyroactivate()">Gyrostyrning: AV</div>
+
+  <div class="center">
+    <h1 class="font" onclick="funcreset()">
+      Stream Shark
+      <i class="fa fa-info-circle" style="font-size:30px" onclick="infosquare()"></i>
+    </h1>
   </div>
-  <div class="button" id="resbutton" onclick="funcreset()"><h2 class="font">Reset</h2></div>
+
+  <div class="infosquare" id="info" onclick="closeinfo()">
+    <div class="back" id="back">
+      Tillbaka
+      <i class="fa fa-times-circle" style="font-size:20px;color:white"></i>
+
+    </div>
+
+  </div>
+
   <div class="center">
     <h3 class="font">
       <i class="fas fa-arrow-left"></i>
@@ -228,87 +63,9 @@
   <div class="slidecontainer" oninput="funcstyr()">
     <input type="range" min="0" max="180" class="slider" ::-moz-range-thumb :hover id="Servo">
   </div>
-  <img class="picture" src="shark.png" onclick="musik()">
+  <img class="picture" src="images/shark.png" onclick="musik()">
 
-  <script>
-    var even = 0;
-    var speed = 0;
-    var styr = 0;
-
-    window.addEventListener('deviceorientation', function (event) {
-      var show = document.getElementById("plsrotate");
-      var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
-
-      if (orientation === "landscape-primary") {
-        show.style.display = "none";
-        speed=(45-event.gamma)/0.00004291534423828125;
-        onSendspeed();
-        styr=(45+event.beta)/0.5;
-        onSendstyr();
-        showres();
-      } 
-      else if (orientation === "landscape-secondary") {
-        show.style.display = "none";
-        speed=-(45-event.gamma)/0.00004291534423828125;
-        onSendspeed();
-        styr=-(45+event.beta)/0.5;
-        onSendstyr();
-        showres();
-      } 
-      else if (orientation === "portrait-secondary" || orientation === "portrait-primary") {
-        show.style.display = "block";
-      }
-    });
-
-    function funcspeed() {
-      speed = document.getElementById("Speed").value;
-      console.log(speed);
-      onSendspeed();
-      showres();
-    }
-
-    function funcstyr() {
-      styr = document.getElementById("Servo").value;
-      onSendstyr();
-      showres();
-    }
-
-    function showres() {
-      var show = document.getElementById("resbutton");
-      if (document.getElementById("Speed").value != 0) {
-        show.style.display = "block";
-      } else if (document.getElementById("Servo").value != 0) {
-        show.style.display = "block";
-      } else {
-        show.style.display = "none";
-      }
-    }
-
-    function funcreset() {
-      document.getElementById("Servo").value = 90;
-      document.getElementById("Speed").value = 0;
-      var show = document.getElementById("resbutton");
-      speed = 0;
-      onSendspeed();
-      onSendstyr();
-      show.style.display = "none";
-    }
-
-    function musik() {
-      if (even % 2 == 0) {
-        var music = 1;
-        Musik = music
-        onSendmusik();
-      } else {
-        var music = 0;
-        Musik = music
-        onSendmusik();
-      }
-      even++;
-      console.log(even)
-    }
-  </script>
-
+  <script src="bodyscript.js"></script>
 </body>
 
 </html>
