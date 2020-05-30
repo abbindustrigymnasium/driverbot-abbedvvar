@@ -1,63 +1,59 @@
-window.onload = function exampleFunction() {
-
+window.onload = function onload() {            // When window loads it starts to connect to the MQTT-broker
     startConnect()
 }
 
 function startConnect() {
-    // Generate a random client ID
-    clientID = "clientID_" + parseInt(Math.random() * 100);
-
-    // Fetch the hostname/IP address and port number from the form
-    host = 'maqiatto.com'
+    clientID = "clientID_" + parseInt(Math.random() * 100);         //Making a random client ID
+    host = 'maqiatto.com'               //Defining where the broker is hosted
     port = '8883';
-    client = new Paho.MQTT.Client(host, Number(port), clientID);
+    client = new Paho.MQTT.Client(host, Number(port), clientID);          //Making a client that starts to connet to the broker
     // Set callback handlers
-    client.onConnectionLost = onConnectionLost;
+    client.onConnectionLost = onConnectionLost;             //Defining functions for responses while connected to the broker
     client.onMessageArrived = onMessageArrived;
 
-    client.connect({
+    client.connect({                //Login credetials used connect
         userName: "edvin.vare@abbindustrigymnasium.se",
         password: "Edvinsrobot",
-        onSuccess: onConnect,
+        onSuccess: onConnect,           //Depending on how connection goes theres functions for handling the situation
         onFailure: onFail,
     });
 }
 
-function onFail() {
+function onFail() {             //If the connection fails it starts the connection process over until it connects
     console.log("Failed to connect!")
     startConnect()
 }
-let topic = "edvin.vare@abbindustrigymnasium.se/ttmotor";
-let topic2 = "edvin.vare@abbindustrigymnasium.se/servo";
-let topic3 = "edvin.vare@abbindustrigymnasium.se/music"
+let speedtopic = "edvin.vare@abbindustrigymnasium.se/ttmotor";           //Defining the different topics used for controlling the robot
+let steertopic = "edvin.vare@abbindustrigymnasium.se/servo";
+let musictopic = "edvin.vare@abbindustrigymnasium.se/music"
 
-function onConnect() {
-    console.log(topic, topic2, topic3);
-    client.subscribe(topic);
-    client.subscribe(topic2);
-    client.subscribe(topic3);
+function onConnect() {                  //When connected to the broker it subscribes to the defined topics
+    console.log(speedtopic, steertopic, musictopic);
+    client.subscribe(speedtopic);
+    client.subscribe(steertopic);
+    client.subscribe(musictopic);
 }
 
 function onSendspeed() {
     let message = speed.toString();
     console.log(message);
     message = new Paho.MQTT.Message(message);
-    message.destinationName = topic;
+    message.destinationName = speedtopic;
     client.send(message);
 }
 
 function onSendstyr() {
-    let message = document.getElementById("Servo").value;
+    let message = styr.toString();
     console.log(message);
     message = new Paho.MQTT.Message(message);
-    message.destinationName = topic2;
+    message.destinationName = steertopic;
     client.send(message);
 }
 
 function onSendmusik() {
     let message = Musik.toString();
     message = new Paho.MQTT.Message(message);
-    message.destinationName = topic3;
+    message.destinationName = musictopic;
     client.send(message);
 }
 

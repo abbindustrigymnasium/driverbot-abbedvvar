@@ -1,152 +1,154 @@
-.banner {
-    position: absolute;
-    background-color: black;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    bottom: 0px;
-    font-size: 40px;
-    color: white;
-    z-index: 10;
-    text-align: center;
-    vertical-align:middle;
-    display: none;
-  }
+.banner {                 /*In this file every object on the website is being defined so that they look and being placed as the way I wanted it*/
+  position: absolute;         /*defining if the position of the object can be moved by others*/
+  background-color: black;    /*color of the background on the object*/
+  top: 0px;      /*Different margins from the edges on the page*/
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  font-size: 40px;    /*size of the text*/
+  color: white;
+  z-index: 10;        /*defining on how it can be stacked on other objects*/
+  text-align: center;       /*how the text is to be placed inside the object*/
+  vertical-align: middle;
+  display: none;            /*if to be displayed or not by default*/
+}
 
-  .button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    position: absolute;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin-left: 50%;
-    margin-right: 50%;
-    top: 5%;
-    display: none;
-    
-    cursor: pointer;
-  }
+.hide {
+  display: none;
+  position: absolute;
+}
 
-  .infosquare {
-    position: absolute;
-    background-color: black;
-    top: 5%;
-    right: 5%;
-    left: 5%;
-    bottom: 5%;
-    font-size: 40px;
-    color: white;
-    z-index: 8;
-    text-align: center;
-    display: none;
-    border-radius: 15px;
-  }
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  position: absolute;
+  padding: 5px 10px;        /*defining the size of the object utside of whats neccesary*/
+  text-align: center;
+  font-size: 16px;
+  margin-left: 50%;
+  margin-right: 50%;
+  top: 5%;
+  display: none;
+  cursor: pointer;        /*describing wich type of cursor to be used when hovering over the object*/
+}
 
-  .pointer {
-    cursor: pointer;
-  }
+.infosquare {
+  position: absolute;
+  background-color: black;
+  top: 5%;
+  right: 5%;
+  left: 5%;
+  bottom: 5%;
+  font-size: 40px;
+  color: white;
+  z-index: 8;
+  text-align: center;
+  display: none;
+  border-radius: 15px;          /*rounding the edges of the object*/
+}
 
-  .back {
-    margin-left: 20px;
-    margin-top: 20px;
-    position: absolute;
-    color: white;
-    z-index: 8;
-    font-size: 20px;
-    font-family: "Arial Black", Gadget, sans-serif;
-    cursor: pointer;
-  }
+.pointer {
+  cursor: pointer;
+}
 
-  .switch {
-    position: absolute;
-    color: black;
-    padding: 20px 30px;
-    background-color: white;
-    border-radius: 40px;
-    z-index: 10;
-    font-size: 15px;
-    font-family: "Arial Black", Gadget, sans-serif;
-    display: none;
-    cursor: pointer;
-  }
+.back {
+  margin-left: 20px;
+  margin-top: 20px;
+  position: absolute;
+  color: white;
+  z-index: 8;
+  font-size: 20px;
+  font-family: "Arial Black", Gadget, sans-serif;       /*defining which font to be used for the text in the object*/
+  cursor: pointer;
+}
 
-  .font {
-    font-family: "Arial Black", Gadget, sans-serif;
-    cursor: pointer;
-  }
+.switch {
+  position: absolute;
+  color: black;
+  padding: 20px 30px;
+  background-color: white;
+  border-radius: 40px;
+  z-index: 10;
+  font-size: 15px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  display: none;
+  cursor: pointer;
+}
 
-  .center {
-    text-align: center;
-    width: auto;
-  }
+.font {
+  font-family: "Arial Black", Gadget, sans-serif;
+  cursor: pointer;
+}
 
-  .background {
-    background-color: rgb(99, 228, 221);
-    background-image: url(images/oceanbackground.jpg);
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-  }
+.center {
+  text-align: center;
+  width: auto;
+}
 
-  .picturecontainer {
-    height: 95%;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    
-  }
+.background { 
+  background-image: url(images/oceanbackground.jpg);        /*the websites background picture*/
+  background-position: center;                  /*how the picture is to be placed on the website*/
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
 
-  .picture {
-    display: block;
-    height: auto;
-    width: 40%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
+.picturecontainer {
+  height: 95%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
 
-  .slidecontainer {
-    width: 80%;
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+}
 
-  .slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 25px;
-    background: #3af700;
-    outline: none;
-    opacity: 0.9;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    border-radius: 100px;
-    object-position: center;
-  }
+.picture {
+  display: block;
+  height: auto;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
 
-  .slider:hover {
-    opacity: 7;
-  }
+.slidecontainer {
+  width: 80%;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 50px;
-    background: rgb(255, 0, 0);
-    cursor: w-resize;
-    border-radius: 10px;
-  }
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #3af700;
+  outline: none;
+  opacity: 0.9;     /*defining the opacity of the object when not hovering over it*/
+  -webkit-transition: .2s;        /*when you start to hover it fades by this definings*/
+  transition: opacity .2s;
+  border-radius: 100px;
+  object-position: center;
+}
 
-  .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: rgb(255, 0, 0);
-    cursor: pointer;
-  }
+.slider:hover {
+  opacity: 7;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 50px;
+  background: rgb(255, 0, 0);
+  cursor: w-resize;
+  border-radius: 10px;
+}
+
+.slider::-moz-range-thumb {         /*because firefox is used we have to define the slider style to mozilla based css*/
+  width: 25px;
+  height: 50px;
+  background: rgb(255, 0, 0);
+  cursor: pointer;
+}

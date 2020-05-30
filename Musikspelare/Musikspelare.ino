@@ -1,4 +1,4 @@
-#define NOTE_B0  31
+#define NOTE_B0  31       //Defining all the notes that can be used to play
 #define NOTE_C1  33
 #define NOTE_CS1 35
 #define NOTE_D1  37
@@ -88,14 +88,14 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-#define Speaker 13
+#define Speaker 13      //Defining the name of the pin where the speaker is mounted
 
-int melody[] = {
-  NOTE_C1,
+int melody[] = {        //Defining the list of notes to be played the JAWS theme
+  NOTE_C1,              
   NOTE_C1, NOTE_D1, 0, 0,
   NOTE_C1, NOTE_D1, NOTE_C1, 0,
   0,
-  NOTE_C1, NOTE_D1, 0, NOTE_C1, NOTE_D1, 0,
+  NOTE_C1, NOTE_D1, 0, NOTE_C1, NOTE_D1, 0,     //Each line is one clock distance in the melody of the JAWS theme
   NOTE_C1, NOTE_D1, 0, NOTE_C1, NOTE_D1, 0,
   NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1, NOTE_C1, NOTE_D1,
   NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1, NOTE_C1, NOTE_D1, NOTE_B0, NOTE_C1,
@@ -108,7 +108,7 @@ int melody[] = {
   NOTE_AS5, NOTE_AS5, NOTE_B5, NOTE_G4, NOTE_C4, NOTE_B4, NOTE_B4, NOTE_D1, 0, 0
 };
 
-int tempo[] = {
+int tempo[] = {       //Defining the lengths of the values where each number is the denominator in a fraction of the clock distance
   1, 4, 8, 6, 4, 4, 4, 8, 8, 1, 4, 8, 8, 4, 8, 8, 4, 8, 8, 4, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 2, 8, 8, 8,
   8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 8, 16, 16, 16, 16, 16, 16, 4, 8, 16, 16, 16, 4, 16, 8, 1, 1
@@ -116,53 +116,43 @@ int tempo[] = {
 
 void setup(void)
 {
-  pinMode(13, OUTPUT); //Högtalaren
-  pinMode(11, INPUT);
-  Serial.begin(9600);
+  pinMode(13, OUTPUT); //Defining the speakerpin as an output
+  Serial.begin(9600);  //Initializing a serial monitor on the comunication port used to comunicating with the Arduino UNO
 
 }
 void loop()
 {
-  int Music = digitalRead(3);
-  if (Music == 1) {
+  int Music = digitalRead(3);   //Reading when the music is to be plyed controlled by the website via the MQTT-broker and the NodeMCU
+  if (Music == 1) {             //If it´s 1 it starts to play the melody
     sing(1);
-
-
   }
 }
 int song = 0;
 
 void sing(int s) {
   song = s;
-  int size = sizeof(melody) / sizeof(int);    //Antal noter som ska spelas
-  for (int thisNote = 0; thisNote < size; thisNote++) {
-    if (digitalRead(3) == 0) {
+  int size = sizeof(melody) / sizeof(int);    //Calculating the number of notes to be played
+  for (int thisNote = 0; thisNote < size; thisNote++) {     //Reapeating the loop as long as the total number of notes is bigger than the notes played
+    if (digitalRead(3) == 0) {      //if the signal from the Node turns of it stops playing
       break;
     }
     else {
-      int Notelength = 1000 / tempo[thisNote];    //Räknar ut längden på varje not i 1 sekund
-      buzz(Speaker, melody[thisNote], Notelength);    //Spelar melodin
-      int Paus = Notelength * 1.30;    //Gör en paus mellan varje not för att framhäva skillnaderna mellan noterna
+      int Notelength = 1000 / tempo[thisNote];    //Calculating the length of each note
+      buzz(Speaker, melody[thisNote], Notelength);    //Plays the note
+      int Paus = Notelength * 1.30;    //Adding a pause between the notes to distinguish each note clear
       delay(Paus);
-      buzz(Speaker, 0, Notelength);   //Slutar spela melodin
+      buzz(Speaker, 0, Notelength);   //Stops playing the note and starts playing the next note
     }
-
-
   }
 }
 
-void buzz(int targetPin, long frequency, long length) {
-  long delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
-  //// 1 second's worth of microseconds, divided by the frequency, then split in half since
-  //// there are two phases to each cycle
-  long numCycles = frequency * length / 1000; // calculate the number of cycles for proper timing
-  //// multiply frequency, which is really cycles per second, by the number of seconds to
-  //// get the total number of cycles to produce
-  for (long i = 0; i < numCycles; i++) { // for the calculated length of time...
-    digitalWrite(targetPin, HIGH); // write the buzzer pin high to push out the diaphram
+void buzz(int targetPin, long frequency, long length) {     //defining the sent values from the sing loop with different names
+  long delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions for playing the correct note
+  long numCycles = frequency * length / 1000; // calculate the number of cycles to be played for the note length
+  for (long i = 0; i < numCycles; i++) { //repeating the loop until the max number of cycles to be played is reached
+    digitalWrite(targetPin, HIGH); // write the speaker pin high
     delayMicroseconds(delayValue); // wait for the calculated delay value
-    digitalWrite(targetPin, LOW); // write the buzzer pin low to pull back the diaphram
+    digitalWrite(targetPin, LOW); // write the buzzer pin low
     delayMicroseconds(delayValue); // wait again or the calculated delay value
   }
-
 }
