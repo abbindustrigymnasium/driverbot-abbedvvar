@@ -13,4 +13,4 @@ Musikspelaren tar emot signaler från styrkontrollern och spelar då musiken i e
 Jag använder mig av en MQTT-broker som är hostad via [MaQiaTTo´s servrar](https://www.maqiatto.com/configure). Genom att endast följa simpla instruktioner på deras sida är det lätt att sätta upp en egen broker med egna specifika topics. Det en MQTT-broker gör är att den tar emot värden från hemsidan i det här fallet och om någon enhet är uppkopplad och prenumererar på en topic så hämtas informationen till enheten. MaQiaTTo har ingen loggning av värdena så de kommer inte att sparas och varje gång ett medelande skickas så skickas det en gång bara. För att kolla vilka värden skom är skickade kan man själv logga dem via deras egen [MQTT-client](http://maqiatto.com/webclient/).
 
 ### Flowchart till systembeskrivningen
-![hej](https://abbindgym-my.sharepoint.com/:i:/g/personal/edvin_vare_abbindustrigymnasium_se/ESZbjMG5CU9Bnzg3OZRi4DUBUhgvzpQpkYfzEHx2SG3BMQ?e=ba7HpM)
+![hej!](https://abbindgym-my.sharepoint.com/:i:/g/personal/edvin_vare_abbindustrigymnasium_se/ESZbjMG5CU9Bnzg3OZRi4DUBUhgvzpQpkYfzEHx2SG3BMQ?e=ba7HpM)
