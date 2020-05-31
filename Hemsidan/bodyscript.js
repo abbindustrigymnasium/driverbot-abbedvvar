@@ -9,7 +9,7 @@ var gyroactive = false;
 window.addEventListener('deviceorientation', function gyro(event) { //Adding a window listener to detect the phones gyroscopic details
     var show = document.getElementById("plsrotate");
     var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation; //Defining a variable that stores the info about wich screenmode the phone is in
-    //if (parseInt(event.alpha) > 0) { // Because a computer doesnt have a gyro it tests if the x-plane (alpha) has a value
+    if (parseInt(event.alpha) > 0) { // Because a computer doesnt have a gyro it tests if the x-plane (alpha) has a value
         if (orientation === "portrait-secondary" || orientation === "portrait-primary") {           //if the phone is in portrait mode it asks the user to rotate it so it can start
             show.style.display = "block";                   
             document.getElementById("gyroswitch").style.display = "none"
@@ -33,7 +33,7 @@ window.addEventListener('deviceorientation', function gyro(event) { //Adding a w
                 onSendstyr();
             }
         }
-  //  }
+   }
 });
 
 function gyroactivate() {           //when the gyroswitch is pressed this function executes
