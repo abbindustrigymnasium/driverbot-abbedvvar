@@ -14,7 +14,7 @@
   <script src="headscript.js"></script>       <!--linking my javascript code for the header-->
 </head>
 
-<body scroll="no" style="overflow: hidden" class="background">
+<body scroll="yes" style="overflow: hidden" class="background">
 
   <div id="plsrotate" class="banner">               <!--if using firefox it comes ut a banner if the user is in portrait mode-->
     Snälla rotera skärmen för att starta kontrollern
@@ -35,7 +35,11 @@
       Tillbaka
       <i class="fa fa-times-circle" style="font-size:20px;color:white"></i>
     </div>
-    <p>Man måste först gå in på firefox via https sen kan man skriva in http för att hemsidan ska funka</p>
+    <p class="font" id="infotext"> 
+      Välkommen till streamshark hemsidan. Om du vill testa att styra roboten via att du lutar på telefonen, använd då firefox för mobiltelefonen. 
+      Väl där, tänk på att gå in på HTTPS först och sedan ta bort S:et för att kunna styra roboten med gyrot. 
+      Tilta även telefonen i landscape läge med hemknappen till vänster.// Edvin Vare(skapare av sidan)
+    </p>
   </div>
 
   <div class="center">
@@ -64,7 +68,7 @@
     <input type="range" min="0" max="180" class="slider" ::-moz-range-thumb :hover id="Servo">
   </div>
   <img class="picture" src="images/shark.png" onclick="musik()">        <!--Picture of shark that works as a button for controlling the music from the robot-->
-
   <script src="bodyscript.js"></script>           <!--linking the script for the body-->
+
 </body>
 </html>

@@ -29,7 +29,7 @@ window.addEventListener('deviceorientation', function gyro(event) { //Adding a w
             styr = parseInt(event.beta) * -3 + 90;          //calculating the steervalue depending on the phones tilt sideways
             if (styr != document.getElementById("gyrostyr").innerHTML && styr >= 0 && styr <= 180) {
                 document.getElementById("gyrostyr").innerHTML = styr;
-                document.getElementById("Styr").value = styr;
+                document.getElementById("Servo").value = styr;
                 onSendstyr();
             }
         }
@@ -51,10 +51,14 @@ function gyroactivate() {           //when the gyroswitch is pressed this functi
 
 function infosquare() {
     document.getElementById("info").style.display = "block";        //if clicking the infobutton this funtion shows the infosquare
+    document.getElementById("gyroswitch").style.display = "none"    //hiding the gyroswitch for aesthetic reasons
 }
 
 function closeinfo() {
     document.getElementById("info").style.display = "none";         //when the back button in the infosquare it closes the square with this function
+    if(event.alpha>0){
+       document.getElementById("gyroswitch").style.display = "block" 
+    }
 }
 
 function funcspeed() {
