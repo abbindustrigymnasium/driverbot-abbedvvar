@@ -9,8 +9,8 @@ Servo servo;
 void onConnectionEstablished();       //Defining the client void to execute in the void loop
 
 EspMQTTClient client(
-  "Vares WiFi",     //WiFi SSID
-  "Varesfiber19",   //WiFi Password
+  "DOVADO-109bc",     //WiFi SSID
+  "pggphpij",   //WiFi Password
   "maqiatto.com",  // MQTT broker ip
   1883,             // MQTT broker port
   "edvin.vare@abbindustrigymnasium.se", // MQTT username
